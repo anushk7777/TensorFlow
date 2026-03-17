@@ -60,13 +60,13 @@ validation_data_dir = os.path.join("test_set", "test_set")
 batch_size = 20
 epochs = 20
 
-# data represented as rows x cols x channels
+
 if K.image_data_format() == "channels_first":
     input_shape = (3, img_width, img_height)
 else:
     input_shape = (img_width, img_height, 3)
 
-# Image data generators
+
 train_datagen = ImageDataGenerator(rescale=1.0 / 255)
 validation_datagen = ImageDataGenerator(rescale=1.0 / 255)
 
@@ -84,7 +84,7 @@ validation_generator = validation_datagen.flow_from_directory(
     class_mode="binary",
 )
 
-# Show sample images
+
 x_batch, y_batch = next(train_generator)
 
 plt.figure(figsize=(12, 12))
@@ -96,7 +96,7 @@ for i in range(min(9, batch_size)):
 plt.tight_layout()
 plt.show()
 
-# Build the model
+
 model = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),
     MaxPooling2D((2, 2)),
@@ -138,6 +138,5 @@ history = model.fit(
     validation_steps=validation_steps,
 )
 
-# Optional: evaluate on validation data
 val_loss, val_acc = model.evaluate(validation_generator, steps=validation_steps)
 print(f"Validation loss: {val_loss:.4f}, Validation accuracy: {val_acc:.4f}")
